@@ -1,0 +1,139 @@
+apply plugin: 'war'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.6
+
+repositories {
+	mavenCentral()
+}
+
+sourceSets {
+	main {
+		java {
+			srcDir 'src/main/java'
+		}
+
+		resources {
+			srcDir 'src/main/resources'
+		}
+	}
+
+	test {
+		java {
+			srcDir 'src/test/java'
+		}
+
+		resources {
+			srcDir 'src/test/resources'
+		}
+	}
+
+	systemtest {
+		java {
+			srcDir 'src/system-test/java'
+		}
+
+		resources {
+			srcDir 'src/system-test/resources'
+		}
+
+		output.classesDir = file(buildDir.path + "/classes/systemtest")
+		compileClasspath = sourceSets.main.compileClasspath + sourceSets.test.compileClasspath + configurations.systemtestCompile
+		runtimeClasspath = output + sourceSets.main.output + configurations.systemtestRuntime
+	} 
+}
+
+war {
+	bcaseName = "CafeteriaWeb"
+	includeEmptyDirs = true
+}
+
+task copyTestDependencies(type: Copy) << {
+    from 'src/main/resources/spring/applicationContext.xml' 
+    into 'src/test/resources/spring'
+}
+
+task removeTestDependencies(type: Delete) << {
+	delete 'src/test/resources/spring/applicationContext.xml'
+}
+
+task copySystemTestDependencies(type: Copy) << {
+    from 'src/test/java/br/com/jayfer/horariofacil/AbstractTests.java'
+    into 'src/system-test/java/br/com/jayfer/horariofacil'
+}
+
+task removeSystemTestDependencies(type: Delete) << {
+    delete 'src/system-test/java/br/com/jayfer/horariofacil/AbstractTests.java'
+}
+
+task systemtest(type : Test) << {
+	testClassesDir = sourceSets.systemtest.output.classesDir
+	classpath = sourceSets.systemtest.runtimeClasspath + sourceSets.systemtest.compileClasspath
+	maxParallelForks = 1
+	systemProperty 'appconfig.root', System.getProperty('appconfig.root')
+
+	def urlBase = System.getProperty('urlBase')
+	if( urlBase ) {
+		systemProperty "urlBase", urlBase
+	}
+	
+	def file = new File('src/system-test/resources/spring/applicationSystemTestsContext.xml')
+	def content = file.getText 'UTF-8'
+
+	def isRemote = Boolean.valueOf( System.getProperty('remote','false') )
+	println "alterando applicationSystemTestsContext.xml para usar o dataSource ${ isRemote ? 'remoto' : 'local'}"
+	if( isRemote ) {
+		content = content.replaceAll( 'ref="dataSource"', 'ref="remoteDataSource"' )
+	} else {
+		content = content.replaceAll( 'ref="remoteDataSource"', 'ref="dataSource"' )
+	}
+
+	systemProperty "remote", "${isRemote}"
+	file.write( content, 'UTF-8' )
+}
+
+compileTestJava.dependsOn copyTestDependencies
+test.doLast { tasks.removeTestDependencies.execute() }
+
+compileSystemtestJava.dependsOn copySystemTestDependencies
+systemtest.doLast { tasks.removeSystemTestDependencies.execute() }
+
+test {
+   testLogging {
+      events 'started', 'passed'
+   }
+}
+
+systemtest {
+   testLogging {
+      events 'started', 'passed'
+   }
+}
+
+dependencies {
+	/* Web Mvc */
+	compile 'org.springframework:spring-context:3.1.2.RELEASE'
+	compile 'org.springframework:spring-core:3.1.2.RELEASE'
+	compile 'org.springframework:spring-web:3.1.2.RELEASE'
+
+	/* ORM */
+	compile 'org.springframework:spring-jdbc:3.1.2.RELEASE'
+	compile 'org.springframework:spring-orm:3.1.2.RELEASE'
+	compile 'org.hibernate:hibernate-core:4.1.6.Final'
+	compile 'org.hibernate:hibernate-entitymanager:4.1.6.Final'
+	
+	/* Utils */
+	compile 'javax.servlet:servlet-api:2.5'
+	compile 'commons-lang:commons-lang:2.6'
+	compile 'log4j:log4j:1.2.17'
+	compile 'commons-validator:commons-validator:1.4.0'
+
+	/* Test */
+	testCompile 'org.springframework:spring-test:3.1.2.RELEASE'
+	testCompile 'junit:junit:4.10'
+	testCompile 'org.mockito:mockito-all:1.9.0'
+	testCompile 'com.h2database:h2:1.3.170'
+	testCompile 'commons-dbcp:commons-dbcp:1.2.2'
+	testCompile 'org.openqa.selenium:selenium-rc:1.0-20081010.060147'
+}
