@@ -34,7 +34,7 @@ public abstract class AbstractFunctionalTests extends AbstractTests {
 
 	@Override
 	protected String getFileName() {
-		return "sql/prepareFunctionTestsDataBase.sql";
+		return "sql/prepareFunctionalTestsDataBase.sql";
 	}
 
 	@Override
