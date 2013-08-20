@@ -16,7 +16,7 @@ public class ExampleTests extends AbstractFunctionalTests {
 	public void indexHeader() {
 		goTo("index.html");
 		WebElement header = findElementByCssSelector("#content h1");
-		assertEquals("Descrição do Problema", header.getText());
+		assertEquals("Descri√ß√£o do Problema", header.getText());
 	}
 	
 }

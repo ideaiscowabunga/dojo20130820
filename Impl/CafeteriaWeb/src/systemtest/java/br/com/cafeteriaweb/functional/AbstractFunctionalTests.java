@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -52,6 +53,11 @@ public abstract class AbstractFunctionalTests extends AbstractTests {
 	@Before
 	public void setUp() {
 		webDriver = new FirefoxDriver();
+	}
+	
+	@After
+	public void tearDown() {
+		webDriver.close();
 	}
 	
 	protected void goTo(String relativePath) {
