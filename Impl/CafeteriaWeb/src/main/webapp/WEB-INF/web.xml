@@ -31,7 +31,7 @@
 	</filter-mapping>
 	<servlet>
 		<servlet-name>list</servlet-name>
-		<servlet-class>br.com.cafeteriaweb.servlet.ListServlet</servlet-class>
+		<servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>list</servlet-name>

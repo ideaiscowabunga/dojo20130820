@@ -7,8 +7,9 @@
 	      http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
 	      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-
-	<bean id="cafeDao" class="br.com.cafeteriaweb.dao.CafeDao"/>
+	<!-- DAO -->
+	<bean id="cafeDao" class="br.com.cafeteriaweb.dao.CafeDao" autowire="byType" />
 	
-	
+	<!-- Controller -->
+	<bean id="list" class="br.com.cafeteriaweb.servlet.ListServlet" autowire="byType" />
 </beans>
