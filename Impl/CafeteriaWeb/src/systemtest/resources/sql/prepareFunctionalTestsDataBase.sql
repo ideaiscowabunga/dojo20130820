@@ -1,0 +1,1 @@
+INSERT INTO CAFES (ID_CAFE, NM_CAFE, DESCRICAO, PRECO) VALUES (9999, 'pilao', 'Negro e forte', 12.5)

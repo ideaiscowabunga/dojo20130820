@@ -1,0 +1,2 @@
+INSERT INTO CAFES (ID_CAFE, NM_CAFE, DESCRICAO, PRECO) VALUES (9998, 'Capuccino', 'Café com creme por cima', 9.8)
+INSERT INTO CAFES (ID_CAFE, NM_CAFE, DESCRICAO, PRECO) VALUES (9999, 'Frapuccino', 'Café com creme por cima, só que mais aviadado', 14.8)

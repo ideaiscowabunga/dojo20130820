@@ -24,7 +24,7 @@ public abstract class AbstractFunctionalTests extends AbstractTests {
 	@Autowired
 	private BasicDataSource remoteDataSource;
 
-	private String urlBase = System.getProperty("urlBase","http://localhost:8080/CafeteriaWeb/");
+	private String urlBase = System.getProperty("urlBase","http://localhost:8085/CafeteriaWeb/");
 
 	private WebDriver webDriver;
 	
