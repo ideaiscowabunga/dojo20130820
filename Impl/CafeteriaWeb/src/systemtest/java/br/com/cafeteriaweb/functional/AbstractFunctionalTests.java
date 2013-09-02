@@ -51,7 +51,7 @@ public abstract class AbstractFunctionalTests extends AbstractTests {
 	}
 
 	@Before
-	public void setUp() {
+	public void prepareWebDriver() {
 		webDriver = new FirefoxDriver();
 	}
 	
@@ -77,5 +77,9 @@ public abstract class AbstractFunctionalTests extends AbstractTests {
 	    element.clear();
 	    element.click();
 	    element.sendKeys( value );
+	}
+	
+	protected String getCurrentUrl() {
+		return webDriver.getCurrentUrl();
 	}
 }

@@ -3,6 +3,7 @@ package br.com.cafeteriaweb.integration.dao;
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,18 @@ public class CafeDaoTest extends AbstractIntegrationTests {
 	
 	@Test
 	public void deletarCafe() {
-		dao.delete("9999");
+		dao.delete(9999L);
 		assertEquals(0, jdbcTemplate.queryForInt("SELECT COUNT(*) FROM CAFES WHERE ID_CAFE = 9999"));
+	}
+
+	@Test
+	public void criarCafe() {
+		Cafe cafe = new Cafe("Expresso", "Tradicional", 3.5F);
+		cafe = dao.create(cafe);
+		
+		Map<String, Object> resultMap = jdbcTemplate.queryForMap( "SELECT * FROM CAFES WHERE ID_CAFE = ?", cafe.getId() );
+		assertEquals( "Expresso", resultMap.get("NM_CAFE") );
+		assertEquals( "Tradicional", resultMap.get("DESCRICAO") );
+		assertEquals( 3.5D, resultMap.get("PRECO") );
 	}
 }

@@ -1,5 +1,8 @@
 package br.com.cafeteriaweb.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,10 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import br.com.cafeteriaweb.exception.ValidateException;
+
 @Entity
 @Table(name="cafes")
-public class Cafe {
+public class Cafe implements Serializable {
 	
+	private static final long serialVersionUID = -2102332887945445971L;
+
 	@Id
 	@SequenceGenerator(name="SEQUENCE", sequenceName="CAFES_SEQ")
 	@GeneratedValue(strategy=GenerationType.AUTO, generator="SEQUENCE")
@@ -26,6 +33,17 @@ public class Cafe {
 	
 	@Column(name="PRECO")
 	private Float preco;
+
+	public Cafe(String nome, String descricao, Float preco) {
+		super();
+		this.nome = nome;
+		this.descricao = descricao;
+		this.preco = preco;
+	}
+	
+	public Cafe() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public Long getId() {
 		return id;
@@ -59,16 +77,24 @@ public class Cafe {
 		this.preco = preco;
 	}
 
-	public Cafe(Long id, String nome, String descricao, Float preco) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.descricao = descricao;
-		this.preco = preco;
-	}
-
-	public Cafe() {
-		// TODO Auto-generated constructor stub
+	public void validate() throws ValidateException {
+		ArrayList<String> invalidationReasons = new ArrayList<String>();
+		
+		if( nome == null || nome.length() > 15 || nome.length() < 3) {
+			invalidationReasons.add("nome");
+		}
+		
+		if( descricao != null && descricao.length() > 60) {
+			invalidationReasons.add("descricao");
+		}
+		
+		if( preco == null || preco <= 0F ) {
+			invalidationReasons.add("preco");
+		}
+		
+		if( !invalidationReasons.isEmpty() ) {
+			throw new ValidateException(invalidationReasons);
+		}
 	}
 
 }

@@ -4,10 +4,7 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.junit.Before;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
-@Transactional(propagation=Propagation.REQUIRED)
 public abstract class AbstractTests extends AbstractTransactionalJUnit4SpringContextTests {
 
 	protected JdbcTemplate jdbcTemplate;

@@ -22,19 +22,23 @@
 	</bean>
 
 	<util:properties id="hibernateProperties">
-		<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+		<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
 		<prop key="hibernate.show_sql">true</prop>
 		<prop key="hibernate.cache.use_query_cache">false</prop>
 		<prop key="hibernate.cache.use_second_level_cache">false</prop>
-		<prop key="hibernate.hbm2ddl.auto">create</prop>
+		<prop key="hibernate.hbm2ddl.auto">none</prop>
 	</util:properties>
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="org.h2.Driver" />
-		<property name="url" value="jdbc:h2:mem:testDb" />
-		<property name="username" value="root" />
-		<property name="password" value="" />
-	</bean>
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" autowire="byName">
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+        <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+        <property name="username" value="CAFETERIAWEB" />
+        <property name="password" value="CAFETERIAWEB" />
+        <property name="timeBetweenEvictionRunsMillis" value="100" />
+        <property name="minEvictableIdleTimeMillis" value="1000" />
+        <property name="removeAbandoned" value="true" />
+        <property name="removeAbandonedTimeout" value="2" />
+    </bean>
 
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">

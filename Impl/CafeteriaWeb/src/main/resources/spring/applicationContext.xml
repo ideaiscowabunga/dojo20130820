@@ -12,4 +12,7 @@
 	
 	<!-- Controller -->
 	<bean id="list" class="br.com.cafeteriaweb.servlet.ListServlet" autowire="byType" />
+	<bean id="delete" class="br.com.cafeteriaweb.servlet.DeleteServlet" autowire="byType" />
+	<bean id="create" class="br.com.cafeteriaweb.servlet.CreateServlet" autowire="byType" />
+	
 </beans>

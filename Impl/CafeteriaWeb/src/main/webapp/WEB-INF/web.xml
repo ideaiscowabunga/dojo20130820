@@ -51,4 +51,13 @@
 		<servlet-name>delete</servlet-name>
 		<url-pattern>/delete</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>create</servlet-name>
+		<servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>create</servlet-name>
+		<url-pattern>/create</url-pattern>
+	</servlet-mapping>
 </web-app>

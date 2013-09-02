@@ -19,14 +19,21 @@ public class CafeDao {
 		Criteria criteria = session().createCriteria(Cafe.class);
 		return (List<Cafe>) criteria.list();
 	}
+	
+	public void delete(Long idCafe) {
+		Cafe cafe = (Cafe) session().get(Cafe.class, idCafe);
+		session().delete(cafe);
+		session().flush();
+	}
+	
+	public Cafe create(Cafe cafe) {
+		session().save(cafe);
+		session().flush();
+		return cafe;
+	}
 
 	private Session session() {
 		return sessionFactory.getCurrentSession();
 	}
-
-	public void delete(String string) {
-		
-	}
-	
 	
 }

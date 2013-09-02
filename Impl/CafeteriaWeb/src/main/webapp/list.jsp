@@ -7,7 +7,7 @@
 	<title>Insert title here</title>
 </head>
 <body>
-	<table>
+	<table border="1" cellpadding="1" cellspacing="1">
 		<thead>
 			<tr>
 				<th>Id</th>
@@ -24,14 +24,22 @@
 					<td>${cafe.id}</td>
 					<td>${cafe.nome}</td>
 					<td>${cafe.descricao}</td>
-					<td>${cafe.preco}</td>
-					<td><a href="/delete?id=${cafe.id}" id="delete${cafe.id}"></a>
+					<td>R$ ${cafe.preco}</td>
+					<td><a href="delete?id=${cafe.id}" id="delete${cafe.id}">Excluir</a>
 					</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 		<tfoot>
-			
+			<form action="create" method="post">
+				<tr id="novoCafe" id="cafe">
+					<td>+</td>
+					<td><input type="text" name="nome" placeholder="Nome" id="nomeCafe"></td>
+					<td><input type="text" name="descricao" placeholder="Descrição" id="descricaoCafe"></td>
+					<td>R$ <input type="text" name="preco" placeholder="Preço" id="precoCafe"></td>
+					<td><input type="submit" name="Criar" value="Criar" id="btCriar"></td>
+				</tr>
+			</form>
 		</tfoot>
 	</table>
 </body>
