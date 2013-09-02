@@ -23,6 +23,10 @@ public class CafeDao {
 	private Session session() {
 		return sessionFactory.getCurrentSession();
 	}
+
+	public void delete(String string) {
+		
+	}
 	
 	
 }

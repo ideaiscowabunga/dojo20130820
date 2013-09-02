@@ -23,4 +23,10 @@ public class CafeDaoTest extends AbstractIntegrationTests {
 		assertEquals(Long.valueOf(9998), cafes.get(0).getId());
 		assertEquals(Long.valueOf(9999), cafes.get(1).getId());
 	}
+	
+	@Test
+	public void deletarCafe() {
+		dao.delete("9999");
+		assertEquals(0, jdbcTemplate.queryForInt("SELECT COUNT(*) FROM CAFES WHERE ID_CAFE = 9999"));
+	}
 }

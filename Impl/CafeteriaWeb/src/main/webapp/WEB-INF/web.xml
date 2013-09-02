@@ -3,10 +3,13 @@
 	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="WebApp_ID" version="3.0">
+	
 	<display-name>CafeteriaWeb</display-name>
+	
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
+	
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
@@ -17,6 +20,7 @@
 			classpath*:spring/dataContext.xml
 		</param-value>
 	</context-param>
+	
 	<filter>
 		<filter-name>OpenSessionInView</filter-name>
 		<filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
@@ -29,6 +33,7 @@
 		<filter-name>OpenSessionInView</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
 	<servlet>
 		<servlet-name>list</servlet-name>
 		<servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
@@ -36,5 +41,14 @@
 	<servlet-mapping>
 		<servlet-name>list</servlet-name>
 		<url-pattern>/list</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>delete</servlet-name>
+		<servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>delete</servlet-name>
+		<url-pattern>/delete</url-pattern>
 	</servlet-mapping>
 </web-app>
