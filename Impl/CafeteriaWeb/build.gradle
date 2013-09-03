@@ -31,11 +31,11 @@ sourceSets {
 
 	systemtest {
 		java {
-			srcDir 'src/system-test/java'
+			srcDir 'src/systemtest/java'
 		}
 
 		resources {
-			srcDir 'src/system-test/resources'
+			srcDir 'src/systemtest/resources'
 		}
 
 		output.classesDir = file(buildDir.path + "/classes/systemtest")
@@ -55,23 +55,22 @@ task copyTestDependencies(type: Copy) << {
 }
 
 task removeTestDependencies(type: Delete) << {
-	delete 'src/test/resources/spring/applicationContext.xml'
+    delete 'src/test/resources/spring/applicationContext.xml'
 }
 
 task copySystemTestDependencies(type: Copy) << {
-    from 'src/test/java/br/com/jayfer/horariofacil/AbstractTests.java'
-    into 'src/system-test/java/br/com/jayfer/horariofacil'
+    from 'src/test/java/br/com/cafeteriaweb/AbstractTests.java'
+    into 'src/systemtest/java/br/com/cafeteriaweb'
 }
 
 task removeSystemTestDependencies(type: Delete) << {
-    delete 'src/system-test/java/br/com/jayfer/horariofacil/AbstractTests.java'
+    delete 'src/systemtest/java/br/com/cafeteriaweb/AbstractTests.java'
 }
 
 task systemtest(type : Test) << {
 	testClassesDir = sourceSets.systemtest.output.classesDir
 	classpath = sourceSets.systemtest.runtimeClasspath + sourceSets.systemtest.compileClasspath
 	maxParallelForks = 1
-	systemProperty 'appconfig.root', System.getProperty('appconfig.root')
 
 	def urlBase = System.getProperty('urlBase')
 	if( urlBase ) {
