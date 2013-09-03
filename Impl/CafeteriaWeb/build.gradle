@@ -49,25 +49,25 @@ war {
 	includeEmptyDirs = true
 }
 
-task copyTestDependencies(type: Copy) << {
+task copyTestDependencies(type: Copy) {
     from 'src/main/resources/spring/applicationContext.xml' 
     into 'src/test/resources/spring'
 }
 
-task removeTestDependencies(type: Delete) << {
+task removeTestDependencies(type: Delete) {
     delete 'src/test/resources/spring/applicationContext.xml'
 }
 
-task copySystemTestDependencies(type: Copy) << {
+task copySystemTestDependencies(type: Copy) {
     from 'src/test/java/br/com/cafeteriaweb/AbstractTests.java'
     into 'src/systemtest/java/br/com/cafeteriaweb'
 }
 
-task removeSystemTestDependencies(type: Delete) << {
+task removeSystemTestDependencies(type: Delete) {
     delete 'src/systemtest/java/br/com/cafeteriaweb/AbstractTests.java'
 }
 
-task systemtest(type : Test) << {
+task systemtest(type : Test) {
 	testClassesDir = sourceSets.systemtest.output.classesDir
 	classpath = sourceSets.systemtest.runtimeClasspath + sourceSets.systemtest.compileClasspath
 	maxParallelForks = 1
