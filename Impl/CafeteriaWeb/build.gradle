@@ -77,11 +77,11 @@ task systemtest(type : Test) << {
 		systemProperty "urlBase", urlBase
 	}
 	
-	def file = new File('src/system-test/resources/spring/applicationSystemTestsContext.xml')
+	def file = new File('src/systemtest/resources/spring/applicationSystemTestContext.xml')
 	def content = file.getText 'UTF-8'
 
 	def isRemote = Boolean.valueOf( System.getProperty('remote','false') )
-	println "alterando applicationSystemTestsContext.xml para usar o dataSource ${ isRemote ? 'remoto' : 'local'}"
+	println "alterando applicationSystemTestContext.xml para usar o dataSource ${ isRemote ? 'remoto' : 'local'}"
 	if( isRemote ) {
 		content = content.replaceAll( 'ref="dataSource"', 'ref="remoteDataSource"' )
 	} else {
